@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pablo Navas | Portafolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#cc0000',
+                            aqua: '#40e0d0',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Fiery header bottom border ONLY */
+        .header-fire {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #cc0000, #40e0d0, #cc0000);
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+            box-shadow: 0 2px 15px rgba(204, 0, 0, 0.6), 0 2px 15px rgba(64, 224, 208, 0.6);
+        }
+
+        /* Fiery text gradient */
+        .fire-text {
+            background: linear-gradient(90deg, #cc0000, #40e0d0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Flame icon animation */
+        .flame-icon {
+            background: linear-gradient(180deg, #cc0000, #40e0d0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: flicker 1s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-3deg); opacity: 0.9; filter: drop-shadow(0 0 5px rgba(204,0,0,0.5)); }
+            100% { transform: scale(1.1) rotate(3deg); opacity: 1; filter: drop-shadow(0 0 15px rgba(64,224,208,0.8)); }
+        }
+
+        /* Glass and scrollbar styling */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        .dark .glass-nav {
+            background: rgba(17, 24, 39, 0.85);
+        }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+        .dark ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        ::-webkit-scrollbar-thumb { background: #cc0000; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #40e0d0; }
+        ::selection { background-color: #cc0000; color: #40e0d0; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-100 min-h-screen flex flex-col justify-between">
+
+    <header class="fixed top-0 left-0 w-full z-40 glass-nav transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo with Flame Icon -->
+                <a href="#inicio" class="flex items-center gap-3 group">
+                    <i class="fas fa-fire text-2xl flame-icon"></i>
+                    <span class="font-bold text-xl sm:text-2xl tracking-tight text-gray-900 dark:text-white group-hover:opacity-80 transition-opacity">
+                        Pablo<span class="text-brand-aqua">Navas</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center space-x-6 font-medium">
+                    <a href="#inicio" class="hover:text-brand-red dark:hover:text-brand-aqua transition-colors">Inicio</a>
+                    <a href="#sobre-mi" class="hover:text-brand-red dark:hover:text-brand-aqua transition-colors">Sobre Mí</a>
+                    <a href="#habilidades" class="hover:text-brand-red dark:hover:text-brand-aqua transition-colors">Habilidades</a>
+                    <a href="#proyectos" class="hover:text-brand-red dark:hover:text-brand-aqua transition-colors">Proyectos</a>
+                    <a href="#contacto" class="hover:text-brand-red dark:hover:text-brand-aqua transition-colors">Contacto</a>
+                </nav>
+
+                <!-- Actions: Theme Toggle & Mobile Menu -->
+                <div class="flex items-center space-x-3">
+                    <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-brand-red transition-colors">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Fire bottom border for header ONLY -->
+        <div class="header-fire"></div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-900 border-b border-brand-red border-opacity-30">
+            <div class="px-4 py-4 space-y-2 flex flex-col">
+                <a href="#inicio" class="mobile-nav-link p-3 rounded-lg hover:bg-brand-red/10 text-brand-red">Inicio</a>
+                <a href="#sobre-mi" class="mobile-nav-link p-3 rounded-lg hover:bg-brand-red/10 text-brand-red">Sobre Mí</a>
+                <a href="#habilidades" class="mobile-nav-link p-3 rounded-lg hover:bg-brand-red/10 text-brand-red">Habilidades</a>
+                <a href="#proyectos" class="mobile-nav-link p-3 rounded-lg hover:bg-brand-red/10 text-brand-red">Proyectos</a>
+                <a href="#contacto" class="mobile-nav-link p-3 rounded-lg hover:bg-brand-red/10 text-brand-red">Contacto</a>
+            </div>
+        </div>
+    </header>
+
+    
+
+    <main class="flex-grow pt-20">
+        
+        <section id="inicio" class="min-h-[85vh] flex items-center justify-center py-20 px-4">
+            <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-12 md:gap-16">
+                
+                <!-- Profile Picture Container (Left) -->
+                <div class="relative shrink-0 group">
+                    <div class="absolute -inset-2 rounded-full bg-gradient-to-tr from-brand-red to-brand-aqua opacity-50 blur-lg group-hover:opacity-80 transition duration-500"></div>
+                    <img src="1789942537014.png" alt="Foto de Pablo Navas" class="relative w-56 h-56 md:w-72 md:h-72 rounded-full border-4 border-gray-100 dark:border-gray-800 shadow-2xl object-cover z-10">
+                </div>
+                
+                <!-- Text Container (Right) -->
+                <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                    <p class="text-brand-aqua font-semibold text-lg mb-2 tracking-wide uppercase">Desarrollador Backend & Full Stack</p>
+                    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 text-gray-900 dark:text-white leading-tight">
+                        <span class="fire-text">Pablo Navas</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-lg leading-relaxed">
+                        Apasionado por la tecnología, construyendo servidores robustos, bases de datos eficientes y experiencias web completas con un toque de innovación.
+                    </p>
+                    
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                        <a href="#contacto" class="px-8 py-3 rounded-xl bg-brand-red hover:bg-red-800 text-white font-bold shadow-lg shadow-brand-red/30 transition-all flex items-center gap-2">
+                            <i class="fas fa-paper-plane"></i> Hablemos
+                        </a>
+                        <a href="#sobre-mi" class="px-8 py-3 rounded-xl border-2 border-brand-aqua text-gray-900 dark:text-white hover:bg-brand-aqua hover:text-gray-900 font-bold transition-all shadow-lg shadow-brand-aqua/20">
+                            Conóceme
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+  <section id="sobre-mi" class="py-24 bg-white dark:bg-gray-900 border-y border-gray-200 dark:border-gray-800">
+
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+               
+
+                <!-- Exact Title -->
+
+                <div class="text-center mb-16">
+
+                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+
+                        Detrás del backend está:
+
+                    </h2>
+
+                    <div class="h-1 w-24 bg-gradient-to-r from-brand-red to-brand-aqua mx-auto rounded"></div>
+
+                </div>
+
+
+
+                <!-- 3 Cards Grid -->
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                    <!-- Card 1: Web Dev Focus -->
+
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-transparent hover:border-brand-red transition-all duration-300 group">
+
+                        <div class="h-48 relative overflow-hidden bg-gray-200 dark:bg-gray-700">
+
+                            <img src="/1000272051.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+
+                        </div>
+
+                        <div class="p-6">
+
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-brand-red transition-colors">Un apasionado por el código</h3>
+
+                            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+
+                                Disfruto resolviendo problemas complejos y estructurando arquitecturas escalables. Para mí, el desarrollo web no es solo escribir líneas de código, sino crear sistemas eficientes que faciliten la vida de los usuarios.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Card 2: Database / Backend Focus -->
+
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-transparent hover:border-brand-aqua transition-all duration-300 group">
+
+                        <div class="h-48 relative overflow-hidden bg-gray-200 dark:bg-gray-700">
+
+                            <img src="/1000272038.jpg" alt="Gestión de Datos" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+
+                        </div>
+
+                        <div class="p-6">
+
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-brand-aqua transition-colors">El orden en el caos</h3>
+
+                            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+
+                                Encuentro una profunda satisfacción en el diseño de bases de datos relacionales y no relacionales. Me aseguro de que la información fluya de manera segura, rápida y consistente desde el servidor hasta el cliente.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Card 3: Hobbies / Personal -->
+
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-transparent hover:border-brand-red transition-all duration-300 group">
+
+                        <div class="h-48 relative overflow-hidden bg-gray-200 dark:bg-gray-700">
+
+                            <img src="/1000272035.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+
+                        </div>
+
+                        <div class="p-6">
+
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-brand-red transition-colors">Más allá de la pantalla</h3>
+
+                            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+
+                                Cuando no estoy optimizando APIs o debuggeando servidores, disfruto aprender nuevas tecnologías, leer sobre innovación y mantener un equilibrio que me permite volver al teclado con la mente fresca y creativa.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+<!-- Sección de Habilidades -->
+<section id="habilidades" class="py-16 px-4 max-w-6xl mx-auto">
+    
+    <div class="flex flex-wrap items-center justify-center gap-2 mb-10">
+        <button class="skill-filter-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-brand-500 text-white shadow-md shadow-brand-500/20" data-filter="all">
+            Todos
+        </button>
+        <button class="skill-filter-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700" data-filter="frontend">
+            Frontend
+        </button>
+        <button class="skill-filter-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700" data-filter="backend">
+            Backend & BD
+        </button>
+        <button class="skill-filter-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700" data-filter="tools">
+            Automatización y Herramientas
+        </button>
+    </div>
+
+    <!-- Skills Grid Container -->
+    <div id="skillsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
+        <!-- Frontend Cards -->
+        <div class="skill-card bg-white dark:bg-gray-800/80 p-5 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 hover:border-brand-500/50 dark:hover:border-brand-500/50 transition-all hover:shadow-lg group" data-category="frontend">
+            <div class="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                <i class="fab fa-html5"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">HTML5</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Estructura Web Semántica</p>
+        </div>
+
+        <div class="skill-card bg-white dark:bg-gray-800/80 p-5 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 hover:border-brand-500/50 dark:hover:border-brand-500/50 transition-all hover:shadow-lg group" data-category="frontend">
+            <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                <i class="fab fa-css3-alt"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">CSS3 / Tailwind</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Diseño Estilizado y Moderno</p>
+        </div>
+
+        <div class="skill-card bg-white dark:bg-gray-800/80 p-5 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 hover:border-brand-500/50 dark:hover:border-brand-500/50 transition-all hover:shadow-lg group" data-category="frontend">
+            <div class="w-12 h-12 rounded-xl bg-yellow-500/10 text-yellow-500 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                <i class="fab fa-js"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">JavaScript (ES6+)</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Lógica Interactiva Avanzada</p>
+        </div>
+
+        <div class="skill-card bg-white dark:bg-gray-800/80 p-5 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 hover:border-brand-500/50 dark:hover:border-brand-500/50 transition-all hover:shadow-lg group" data-category="frontend">
+            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Diseño Adaptativo</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Experiencia Mobile-First</p>
+        </div>
+
+        <!-- Backend Cards -->
+        <div class="skill-card bg-white dark:bg-gray-800/80 p-5 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 hover:border-brand-500/50 dark:hover:border-brand-500/50 transition-all hover:shadow-lg group" data-category="backend">
+            <div class="w-12 h-12 rounded-xl bg-green-500/10 text-green-500 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                <i class="fab fa-node-js"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Node.js</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Entorno de Ejecución</p>
+        </div>
+
+        <div class="skill-card bg-white dark:bg-gray-800/80 p-5 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 hover:border-brand-500/50 dark:hover:border-brand-500/50 transition-all hover:shadow-lg group" data-category="backend">
+            <div class="w-12 h-12 rounded-xl bg-gray-500/10 text-gray-400 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                <i class="fas fa-server"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Express.js</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Framework Servidor Web</p>
+        </div>
+
+        <div class="skill-card bg-white dark:bg-gray-800/80 p-5 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 hover:border-brand-500/50 dark:hover:border-brand-500/50 transition-all hover:shadow-lg group" data-category="backend">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                <i class="fas fa-database"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">MongoDB</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Base de Datos NoSQL</p>
+        </div>
+
+        <div class="skill-card bg-white dark:bg-gray-800/80 p-5 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 hover:border-brand-500/50 dark:hover:border-brand-500/50 transition-all hover:shadow-lg group" data-category="backend">
+            <div class="w-12 h-12 rounded-xl bg-blue-600/10 text-blue-600 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                <i class="fas fa-table"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">MySQL</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Base de Datos Relacional</p>
+        </div>
+
+        <!-- Tools Cards -->
+        <div class="skill-card bg-white dark:bg-gray-800/80 p-5 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 hover:border-brand-500/50 dark:hover:border-brand-500/50 transition-all hover:shadow-lg group" data-category="tools">
+            <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                <i class="fab fa-git-alt"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Git & GitHub</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Control de Versiones</p>
+        </div>
+
+        <div class="skill-card bg-white dark:bg-gray-800/80 p-5 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 hover:border-brand-500/50 dark:hover:border-brand-500/50 transition-all hover:shadow-lg group" data-category="tools">
+            <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-500 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                <i class="fas fa-project-diagram"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">n8n Workflow</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Automatización de Procesos</p>
+        </div>
+
+        <div class="skill-card bg-white dark:bg-gray-800/80 p-5 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 hover:border-brand-500/50 dark:hover:border-brand-500/50 transition-all hover:shadow-lg group" data-category="tools">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                <i class="fas fa-plug"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">RESTful APIs</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Integración e Interfaz Web</p>
+        </div>
+
+        <div class="skill-card bg-white dark:bg-gray-800/80 p-5 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 hover:border-brand-500/50 dark:hover:border-brand-500/50 transition-all hover:shadow-lg group" data-category="tools">
+            <div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-500 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                <i class="fas fa-cloud"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Postman / APIs</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Pruebas de Servicios</p>
+        </div>
+    </div>
+</section>
+        <section id="proyectos" class="py-24 bg-white dark:bg-gray-900 border-y border-gray-200 dark:border-gray-800">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Proyectos Destacados</h2>
+                    <div class="h-1 w-24 bg-gradient-to-r from-brand-red to-brand-aqua mx-auto rounded"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Proyecto 1 -->
+                    <div class="bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl shadow border-l-4 border-brand-red relative overflow-hidden group hover:shadow-xl transition-all">
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">API RESTful para E-commerce</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">Un backend robusto construido para gestionar inventarios, usuarios y carritos de compras. Incluye autenticación con JWT y manejo avanzado de errores.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-white dark:bg-gray-700 rounded-md text-xs font-semibold text-gray-700 dark:text-gray-300 shadow-sm">Node.js</span>
+                            <span class="px-3 py-1 bg-white dark:bg-gray-700 rounded-md text-xs font-semibold text-gray-700 dark:text-gray-300 shadow-sm">Express</span>
+                            <span class="px-3 py-1 bg-white dark:bg-gray-700 rounded-md text-xs font-semibold text-gray-700 dark:text-gray-300 shadow-sm">MongoDB</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-brand-red font-bold hover:text-brand-aqua transition-colors">
+                            Ver código en GitHub <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+
+                    <!-- Proyecto 2 -->
+                    <div class="bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl shadow border-l-4 border-brand-aqua relative overflow-hidden group hover:shadow-xl transition-all">
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Dashboard de Gestión Web</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">Interfaz administrativa responsiva donde el cliente interactúa con la API. Presentación visual de datos y formularios interactivos.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-white dark:bg-gray-700 rounded-md text-xs font-semibold text-gray-700 dark:text-gray-300 shadow-sm">JavaScript</span>
+                            <span class="px-3 py-1 bg-white dark:bg-gray-700 rounded-md text-xs font-semibold text-gray-700 dark:text-gray-300 shadow-sm">HTML</span>
+                            <span class="px-3 py-1 bg-white dark:bg-gray-700 rounded-md text-xs font-semibold text-gray-700 dark:text-gray-300 shadow-sm">CSS</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-brand-aqua font-bold hover:text-brand-red transition-colors">
+                            Ver demostración <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="py-24 bg-gray-50 dark:bg-gray-950">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="mb-16">
+                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Dónde Comunicarse</h2>
+                    <div class="h-1 w-24 bg-gradient-to-r from-brand-red to-brand-aqua mx-auto rounded"></div>
+                    <p class="mt-6 text-gray-600 dark:text-gray-400 text-lg">Estoy disponible para nuevas oportunidades y colaboraciones. ¡Contáctame!</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- GitHub -->
+                    <a href="https://github.com/pablo-navas" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 hover:-translate-y-2 hover:shadow-xl hover:border-brand-red transition-all group">
+                        <div class="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-3xl text-gray-800 dark:text-gray-200 group-hover:text-brand-red transition-colors mb-4">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-gray-900 dark:text-white mb-1">GitHub</h4>
+                        <span class="text-gray-500 dark:text-gray-400 text-xs">/pablo-navas</span>
+                    </a>
+
+                    <!-- WhatsApp -->
+                    <a href="https://wa.me/50254165382" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 hover:-translate-y-2 hover:shadow-xl hover:border-brand-aqua transition-all group">
+                        <div class="w-16 h-16 rounded-full bg-brand-aqua/10 flex items-center justify-center text-3xl text-brand-aqua group-hover:bg-brand-aqua group-hover:text-white transition-colors mb-4">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-gray-900 dark:text-white mb-1">WhatsApp</h4>
+                        <span class="text-brand-aqua font-medium text-sm">+502 5416 5382</span>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/in/pablo-navas-25046b28b/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 hover:-translate-y-2 hover:shadow-xl hover:border-brand-aqua transition-all group">
+                        <div class="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-3xl text-blue-600 dark:text-blue-400 group-hover:text-brand-aqua transition-colors mb-4">
+                            <i class="fab fa-linkedin-in"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-gray-900 dark:text-white mb-1">LinkedIn</h4>
+                        <span class="text-gray-500 dark:text-gray-400 text-xs break-all text-center">/pablo-navas-25046b28b/</span>
+                    </a>
+
+                    <!-- Gmail -->
+                    <a href="mailto:pablonavasguate@gmail.com" class="flex flex-col items-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 hover:-translate-y-2 hover:shadow-xl hover:border-brand-red transition-all group">
+                        <div class="w-16 h-16 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-3xl text-brand-red group-hover:bg-brand-red group-hover:text-white transition-colors mb-4">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-gray-900 dark:text-white mb-1">Gmail</h4>
+                        <span class="text-brand-red font-medium text-xs break-all text-center">pablonavasguate@gmail.com</span>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white dark:bg-gray-900 py-8 border-t border-gray-200 dark:border-gray-800">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="text-gray-500 dark:text-gray-400 font-medium">
+                ¿Cómo un hombre va a ser capaz de cuidar su propio caballo, pulir su lanza y su casco, si ha perdido la costumbre de atender a su propia persona, que es su posesión más preciada?</span> <span class="fire-text font-bold">Alejandro magno</span>.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Set Year dynamically
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Theme Toggle Setup
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                themeIcon.classList.remove('text-brand-red');
+                themeIcon.classList.add('text-brand-aqua');
+            } else {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                themeIcon.classList.remove('text-brand-aqua');
+                themeIcon.classList.add('text-brand-red');
+            }
+        });
+
+        // Mobile Menu Setup
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = document.querySelectorAll('.skill-filter-btn');
+    const skillCards = document.querySelectorAll('.skill-card');
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filter = btn.getAttribute('data-filter');
+
+            // 1. Cambiar estilo del botón activo
+            filterButtons.forEach(b => {
+                b.classList.remove('bg-brand-500', 'text-white', 'shadow-md', 'shadow-brand-500/20');
+                b.classList.add('bg-white', 'dark:bg-gray-800', 'text-gray-600', 'dark:text-gray-300');
+            });
+
+            btn.classList.add('bg-brand-500', 'text-white', 'shadow-md', 'shadow-brand-500/20');
+            btn.classList.remove('bg-white', 'dark:bg-gray-800', 'text-gray-600', 'dark:text-gray-300');
+
+            // 2. Mostrar/Ocultar tarjetas según la categoría
+            skillCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                if (filter === 'all' || category === filter) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    });
+});
+    </script>
+</body>
+</html>
